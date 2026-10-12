@@ -226,7 +226,7 @@ to Ganymede) · **Web Audio** for synthesized and recorded sound · **Cloudflare
 | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Live**         | The bazaar and its eleven games in both views · email sign-in, with the first coin on the house · the x402 coin slot on Solana, Base and Algorand mainnet · credit across every cabinet · high-score boards · the touch gamepad · installable on phones                                       |
 | **In the works** | The games moving onto Ganymede, River Raid first — and with it, River Raid played with credit on its own board · agents playing through **WebMCP**: Ganymede is gaining an interpreter that turns a game's state and moves into tools an AI agent can use, by the same rules as everyone else |
-| **Planned**      | **MPP** (the Machine Payments Protocol) alongside x402                                                                                                                                                                                                                                        |
+
 
 ## Credits
 
