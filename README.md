@@ -25,11 +25,7 @@
 | | |
 |---|---|
 | **Live app** | https://ab.goplausible.xyz/app/ |
-| **Pitch video** | https://ab.goplausible.xyz/media/cryptofair-pitch.mp4 |
-| **Demo video** | https://ab.goplausible.xyz/media/cryptofair-demo.mp4 |
-| **Poster** | [assets/poster.png](assets/poster.png) · https://ab.goplausible.xyz/media/goplausible-ganymede-arcadebazaar.png |
 | **Arcade Bazaar** (the platform) | https://github.com/GoPlausible/arcadebazaar |
-| **Games** (all eleven) | https://github.com/GoPlausible/games |
 | **Ganymede** (the game engine) | https://github.com/GoPlausible/Ganymede |
 | **Built by** | [GoPlausible](https://goplausible.com) |
 
@@ -38,7 +34,7 @@
 <table>
   <tr>
     <td align="center" width="50%">
-      <a href="https://ab.goplausible.xyz/media/cryptofair-pitch.mp4"><img src="assets/pitch-video.jpg" alt="Watch the pitch" width="100%"></a><br>
+      <a href="https://ab.goplausible.xyz/media/cryptofair-pitch.mp4"><img src="assets/pitch-video.png" alt="Watch the pitch" width="100%"></a><br>
       <b><a href="https://ab.goplausible.xyz/media/cryptofair-pitch.mp4">▶ The pitch</a></b> · 6 min
     </td>
     <td align="center" width="50%">
@@ -75,7 +71,9 @@ landing page shows it live — one run, both views, with a seam you can drag bet
 - **Nothing inside a game is for sale.** A coin buys plays, never an advantage.
 - **High-score boards.** Every coin game keeps an all-time table of each player's best, under the name they
   choose — never their email.
-- **River Raid is free play**: no coin, and no board.
+- **River Raid can be played free.** A free play needs no coin and keeps no leaderboard. Played with credit,
+  River Raid counts like any other coin game, with its scores on its own board — that arrives with its move
+  onto Ganymede.
 
 The coin slot is **x402 v2**, the HTTP-native payment protocol: pressing play on a cabinet with no credit
 opens the slot; the server answers the coin request with **`402 Payment Required`** and the coin's terms (one
@@ -222,7 +220,7 @@ to Ganymede) · **Web Audio** for synthesized and recorded sound · **Cloudflare
 | | |
 |---|---|
 | **Live** | The bazaar and its eleven games in both views · email sign-in, with the first coin on the house · the x402 coin slot on Solana, Base and Algorand mainnet · credit across every cabinet · high-score boards · the touch gamepad · installable on phones |
-| **In the works** | The games moving onto Ganymede, River Raid first · agents playing through **WebMCP**: Ganymede is gaining an interpreter that turns a game's state and moves into tools an AI agent can use, by the same rules as everyone else |
+| **In the works** | The games moving onto Ganymede, River Raid first — and with it, River Raid played with credit on its own board · agents playing through **WebMCP**: Ganymede is gaining an interpreter that turns a game's state and moves into tools an AI agent can use, by the same rules as everyone else |
 | **Planned** | **MPP** (the Machine Payments Protocol) alongside x402 |
 
 ## Credits
