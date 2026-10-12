@@ -22,23 +22,23 @@
 
 ## Links
 
-| | |
-|---|---|
-| **Live app** | https://ab.goplausible.xyz/app/ |
+|                                  |                                             |
+| -------------------------------- | ------------------------------------------- |
+| **Live app**                     | https://ab.goplausible.xyz/app/             |
 | **Arcade Bazaar** (the platform) | https://github.com/GoPlausible/arcadebazaar |
-| **Ganymede** (the game engine) | https://github.com/GoPlausible/Ganymede |
-| **Built by** | [GoPlausible](https://goplausible.com) |
+| **Ganymede** (the game engine)   | https://github.com/GoPlausible/Ganymede     |
+| **Built by**                     | [GoPlausible](https://goplausible.com)      |
 
-## Videos
+## Cryptofair Videos
 
 <table>
   <tr>
-    <td align="center" width="50%">
+    <td align="center" width="60%">
       <a href="https://ab.goplausible.xyz/media/cryptofair-pitch.mp4"><img src="assets/pitch-video.png" alt="Watch the pitch" width="100%"></a><br>
       <b><a href="https://ab.goplausible.xyz/media/cryptofair-pitch.mp4">▶ The pitch</a></b> · 6 min
     </td>
-    <td align="center" width="50%">
-      <a href="https://ab.goplausible.xyz/media/cryptofair-demo.mp4"><img src="assets/demo-video.jpg" alt="Watch the demo" width="100%"></a><br>
+    <td align="center" width="40%">
+      <a href="https://ab.goplausible.xyz/media/cryptofair-demo.mp4"><img src="assets/demo-video.png" alt="Watch the demo" width="100%"></a><br>
       <b><a href="https://ab.goplausible.xyz/media/cryptofair-demo.mp4">▶ The demo</a></b> · 5 min
     </td>
   </tr>
@@ -119,14 +119,19 @@ dawn to night, and in the originals, Afterglow's past that becomes the level and
 
 <table>
   <tr>
-    <td width="20%"><img src="assets/posters/arc-ninja.png" alt="Arc Ninja poster"><br><sub>Arc Ninja</sub></td>
-    <td width="20%"><img src="assets/posters/mobius-loop.png" alt="Mobius: racing the living Möbius loop"><br><sub>Mobius</sub></td>
-    <td width="20%"><img src="assets/posters/mobius-dash.png" alt="Mobius: hoverboard dash"><br><sub>Mobius</sub></td>
-    <td width="20%"><img src="assets/posters/runner-noire.png" alt="Runner Noire: Urban Shadow concept"><br><sub>Runner Noire</sub></td>
-    <td width="20%"><img src="assets/posters/the-journey.png" alt="The Journey: koi through the canyon"><br><sub>The Journey</sub></td>
+    <td width="30%"><img src="assets/posters/arc-ninja.png" alt="Arc Ninja poster"><br><sub>Arc Ninja</sub></td>
+    <td width="30%"><img src="assets/posters/runner-noire.png" alt="Runner Noire: Urban Shadow concept"><br><sub>Runner Noire</sub></td>
+    <td width="30%"><img src="assets/posters/the-journey.png" alt="The Journey: koi through the canyon"><br><sub>The Journey</sub></td>
+  </tr>
+
+
+
+</table>
+<table>
+  <tr>
+    <td width="100%"><img src="assets/posters/mobius-loop.png" alt="Mobius: racing the living Möbius loop"><br><sub>Mobius</sub></td>
   </tr>
 </table>
-
 ---
 
 ## How it is built: three parts
@@ -173,15 +178,15 @@ and the rules are tested headless.
 Ganymede is written **from the games up**: every part is taken from code the games already share, and its
 specs hold it to that code — the same inputs give the same bits. Its **core** is built:
 
-| Module | What it does | Taken from |
-|---|---|---|
-| `stepper` | Fixed steps from a variable frame clock, with interpolation between steps | the games' loops, proven on Enduro's race step for step |
-| `rng` | Seeded generators whose whole state is one number | Afterglow, Runner Noire, River Raid, The Journey |
-| `geom` | Swept boxes, swept oriented boxes (SAT), swept circles, segments, half ellipses | Seaquest, Chopper Command, Enduro, Missile Command, Arc Ninja, River Raid |
-| `rules` | Spring-return throttles, cooldowns, schedules, ramps, scoring, lives with hold and grace | River Raid, Arc Ninja, The Journey, Enduro, Seaquest, Runner Noire |
-| `stream` | Worlds built ahead and forgotten behind, in float64 — no rebasing, however far | The Journey |
-| `pilot` | Demo players that copy the run and play candidates forward: `survives`, `searchTree` | Pitfall, Runner Noire (rebuilt on it, its courier runs the very same run) |
-| `intervals`, `clone`, `events`, `timers`, `replay`, `math`, `curves` | Spans, zero-allocation copies, typed event queues, step timers, determinism checks | across the games |
+| Module                                                               | What it does                                                                             | Taken from                                                                |
+| -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `stepper`                                                            | Fixed steps from a variable frame clock, with interpolation between steps                | the games' loops, proven on Enduro's race step for step                   |
+| `rng`                                                                | Seeded generators whose whole state is one number                                        | Afterglow, Runner Noire, River Raid, The Journey                          |
+| `geom`                                                               | Swept boxes, swept oriented boxes (SAT), swept circles, segments, half ellipses          | Seaquest, Chopper Command, Enduro, Missile Command, Arc Ninja, River Raid |
+| `rules`                                                              | Spring-return throttles, cooldowns, schedules, ramps, scoring, lives with hold and grace | River Raid, Arc Ninja, The Journey, Enduro, Seaquest, Runner Noire        |
+| `stream`                                                             | Worlds built ahead and forgotten behind, in float64 — no rebasing, however far           | The Journey                                                               |
+| `pilot`                                                              | Demo players that copy the run and play candidates forward: `survives`, `searchTree`     | Pitfall, Runner Noire (rebuilt on it, its courier runs the very same run) |
+| `intervals`, `clone`, `events`, `timers`, `replay`, `math`, `curves` | Spans, zero-allocation copies, typed event queues, step timers, determinism checks       | across the games                                                          |
 
 The core is pure TypeScript — no DOM, no clock, no unseeded randomness — so it runs in a page, in Node and in
 a Worker. Next come the browser runtime (loop, input with gamepads, views), rendering (Canvas 2D and WebGL2
@@ -217,11 +222,11 @@ to Ganymede) · **Web Audio** for synthesized and recorded sound · **Cloudflare
 
 ## Status
 
-| | |
-|---|---|
-| **Live** | The bazaar and its eleven games in both views · email sign-in, with the first coin on the house · the x402 coin slot on Solana, Base and Algorand mainnet · credit across every cabinet · high-score boards · the touch gamepad · installable on phones |
+|                  |                                                                                                                                                                                                                                                                                               |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Live**         | The bazaar and its eleven games in both views · email sign-in, with the first coin on the house · the x402 coin slot on Solana, Base and Algorand mainnet · credit across every cabinet · high-score boards · the touch gamepad · installable on phones                                       |
 | **In the works** | The games moving onto Ganymede, River Raid first — and with it, River Raid played with credit on its own board · agents playing through **WebMCP**: Ganymede is gaining an interpreter that turns a game's state and moves into tools an AI agent can use, by the same rules as everyone else |
-| **Planned** | **MPP** (the Machine Payments Protocol) alongside x402 |
+| **Planned**      | **MPP** (the Machine Payments Protocol) alongside x402                                                                                                                                                                                                                                        |
 
 ## Credits
 
