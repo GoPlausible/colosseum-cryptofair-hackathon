@@ -35,11 +35,11 @@
   <tr>
     <td align="center" width="60%">
       <a href="https://ab.goplausible.xyz/media/cryptofair-pitch.mp4"><img src="assets/pitch-video.png" alt="Watch the pitch" width="100%"></a><br>
-      <b><a href="https://ab.goplausible.xyz/media/cryptofair-pitch.mp4">▶ The pitch</a></b> · 6 min
+      <b><a href="https://ab.goplausible.xyz/media/cryptofair-pitch.mp4">▶ The pitch</a></b> · ~2 min
     </td>
     <td align="center" width="40%">
       <a href="https://ab.goplausible.xyz/media/cryptofair-demo.mp4"><img src="assets/demo-video.png" alt="Watch the demo" width="100%"></a><br>
-      <b><a href="https://ab.goplausible.xyz/media/cryptofair-demo.mp4">▶ The demo</a></b> · 5 min
+      <b><a href="https://ab.goplausible.xyz/media/cryptofair-demo.mp4">▶ The demo</a></b> · ~4 min
     </td>
   </tr>
 </table>
