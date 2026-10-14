@@ -7,7 +7,7 @@
 <p align="center">
   <b>Colosseum Cryptofair Hackathon submission</b><br>
   A modern online arcade where every game plays in a <b>Vintage</b> and a <b>Modern</b> view,
-  coins are <b>x402</b> payments in USDC, and the games run on <b>Ganymede</b>, our own game engine.
+  coins are <b>x402</b> payments in USDC, and <b>Ganymede</b> is our own game engine.
 </p>
 
 <p align="center">
@@ -72,8 +72,7 @@ landing page shows it live — one run, both views, with a seam you can drag bet
 - **High-score boards.** Every coin game keeps an all-time table of each player's best, under the name they
   choose — never their email.
 - **River Raid can be played free.** A free play needs no coin and keeps no leaderboard. Played with credit,
-  River Raid counts like any other coin game, with its scores on its own board — that arrives with its move
-  onto Ganymede.
+  River Raid counts like any other coin game, with its scores on its own board.
 
 The coin slot is **x402 v2**, the HTTP-native payment protocol: pressing play on a cabinet with no credit
 opens the slot; the server answers the coin request with **`402 Payment Required`** and the coin's terms (one
@@ -163,7 +162,7 @@ flowchart LR
 - **The games** ([games](https://github.com/GoPlausible/games)) are eleven folders, each a whole game: its
   rules, its two views, its art, its sound and its story UI. A game fetches its engine, both views, its sound
   and its art behind its own loading screen only when you press play, so the landing page stays light.
-- **Ganymede** ([Ganymede](https://github.com/GoPlausible/Ganymede)) is the engine the games move onto.
+- **Ganymede** ([Ganymede](https://github.com/GoPlausible/Ganymede)) is our game engine.
 
 ### One set of rules, two renderers
 
@@ -189,9 +188,7 @@ specs hold it to that code — the same inputs give the same bits. Its **core** 
 | `intervals`, `clone`, `events`, `timers`, `replay`, `math`, `curves` | Spans, zero-allocation copies, typed event queues, step timers, determinism checks       | across the games                                                          |
 
 The core is pure TypeScript — no DOM, no clock, no unseeded randomness — so it runs in a page, in Node and in
-a Worker. Next come the browser runtime (loop, input with gamepads, views), rendering (Canvas 2D and WebGL2
-through Three.js) and audio; then the games move onto it one at a time, **River Raid first**, each played and
-tested before the next.
+a Worker.
 
 ### Infrastructure
 
@@ -215,8 +212,7 @@ same-origin, so there is no CORS anywhere.
 ## Tech stack
 
 **TypeScript** throughout · **React** and **Vite** for the platform · the **HTML canvas** for Vintage views ·
-**WebGL2**, **Three.js** and custom **GLSL** shaders for Modern views · **Phaser** (River Raid, until it moves
-to Ganymede) · **Web Audio** for synthesized and recorded sound · **Cloudflare Workers** with **Hono**,
+**WebGL2**, **Three.js** and custom **GLSL** shaders for Modern views · **Phaser** (River Raid) · **Web Audio** for synthesized and recorded sound · **Cloudflare Workers** with **Hono**,
 **Pages**, **D1**, **KV**, **R2** and **Durable Objects** · **x402** with USDC on **Solana**, **Base** and
 **Algorand** · **Playwright** driving every game in a real browser · **Ganymede**, our own engine.
 
@@ -225,7 +221,7 @@ to Ganymede) · **Web Audio** for synthesized and recorded sound · **Cloudflare
 |                  |                                                                                                                                                                                                                                                                                               |
 | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Live**         | The bazaar and its eleven games in both views · email sign-in, with the first coin on the house · the x402 coin slot on Solana, Base and Algorand mainnet · credit across every cabinet · high-score boards · the touch gamepad · installable on phones                                       |
-| **In the works** | The games moving onto Ganymede, River Raid first — and with it, River Raid played with credit on its own board · agents playing through **WebMCP**: Ganymede is gaining an interpreter that turns a game's state and moves into tools an AI agent can use, by the same rules as everyone else |
+| **In the works** | The games running on Ganymede · agents playing through **WebMCP**: Ganymede is gaining an interpreter that turns a game's state and moves into tools an AI agent can use, by the same rules as everyone else |
 
 
 ## Credits
