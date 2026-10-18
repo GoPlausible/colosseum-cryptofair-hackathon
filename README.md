@@ -146,11 +146,13 @@ flowchart LR
     GM["each game: its rules, both views,<br/>its art, sound and story UI"]
   end
   subgraph E["Ganymede · the game engine"]
+    HOST["host: loop, input, phases, views<br/>stage · dom · render2d · render3d · audio"]
     CORE["core: deterministic rules, steps,<br/>randomness, geometry, pilots"]
   end
   UI -- "reads games/catalogue.json,<br/>loads each game at runtime" --> GM
   GM -- implements --> C
-  GM -. "moving onto, one game at a time" .-> CORE
+  GM -- "River Raid runs on it" --> HOST
+  HOST --> CORE
 ```
 
 - **Arcade Bazaar** ([arcadebazaar](https://github.com/GoPlausible/arcadebazaar)) is the platform, and it holds
@@ -162,7 +164,8 @@ flowchart LR
 - **The games** ([games](https://github.com/GoPlausible/games)) are eleven folders, each a whole game: its
   rules, its two views, its art, its sound and its story UI. A game fetches its engine, both views, its sound
   and its art behind its own loading screen only when you press play, so the landing page stays light.
-- **Ganymede** ([Ganymede](https://github.com/GoPlausible/Ganymede)) is our game engine.
+- **Ganymede** ([Ganymede](https://github.com/GoPlausible/Ganymede)) is our game engine, and **River Raid runs
+  on it**.
 
 ### One set of rules, two renderers
 
@@ -175,7 +178,14 @@ and the rules are tested headless.
 ### Ganymede, our game engine
 
 Ganymede is written **from the games up**: every part is taken from code the games already share, and its
-specs hold it to that code — the same inputs give the same bits. Its **core** is built:
+specs hold it to that code — the same inputs give the same bits.
+
+**River Raid is the first game on it.** Its rules were rebuilt as a Ganymede simulation and checked against
+ten recorded runs of its earlier build, about 72,500 frames: every one replays exactly, frame for frame, so it
+plays as it always did. Its Modern view is unchanged; its Vintage view, cockpit menus, controls and the demo
+pilot that flies its card are Ganymede's pieces put together, and it downloads a third less before it starts.
+
+Its **core** is built:
 
 | Module                                                               | What it does                                                                             | Taken from                                                                |
 | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
@@ -188,7 +198,16 @@ specs hold it to that code — the same inputs give the same bits. Its **core** 
 | `intervals`, `clone`, `events`, `timers`, `replay`, `math`, `curves` | Spans, zero-allocation copies, typed event queues, step timers, determinism checks       | across the games                                                          |
 
 The core is pure TypeScript — no DOM, no clock, no unseeded randomness — so it runs in a page, in Node and in
-a Worker.
+a Worker. Around it is everything a game runs on in the browser:
+
+| Module     | What it does                                                                                                                                                 |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `host`     | The loop (fixed steps, frames drawn between them), input as actions from keys, gamepads and the bazaar's touch pad, a game's phases and the coin slot's gate, the Vintage ⇄ Modern switch and its transition, storage, full screen, assets |
+| `stage`    | The game's frame, scaled by whole pixels so the Vintage picture stays sharp                                                                                  |
+| `render2d` | Canvas surfaces, and sprite sheets cut, keyed and recoloured once                                                                                            |
+| `render3d` | The WebGL2 check, so a browser without it keeps playing in Vintage                                                                                           |
+| `audio`    | One Web Audio context per game, woken by the player's first press                                                                                           |
+| `dom`      | Menus played from the keyboard (Space for the main action, arrows between buttons) and HUDs that write only what changed                                     |
 
 ### Infrastructure
 
@@ -212,7 +231,7 @@ same-origin, so there is no CORS anywhere.
 ## Tech stack
 
 **TypeScript** throughout · **React** and **Vite** for the platform · the **HTML canvas** for Vintage views ·
-**WebGL2**, **Three.js** and custom **GLSL** shaders for Modern views · **Phaser** (River Raid) · **Web Audio** for synthesized and recorded sound · **Cloudflare Workers** with **Hono**,
+**WebGL2**, **Three.js** and custom **GLSL** shaders for Modern views · **Web Audio** for synthesized and recorded sound · **Cloudflare Workers** with **Hono**,
 **Pages**, **D1**, **KV**, **R2** and **Durable Objects** · **x402** with USDC on **Solana**, **Base** and
 **Algorand** · **Playwright** driving every game in a real browser · **Ganymede**, our own engine.
 
@@ -220,8 +239,8 @@ same-origin, so there is no CORS anywhere.
 
 |                  |                                                                                                                                                                                                                                                                                               |
 | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Live**         | The bazaar and its eleven games in both views · email sign-in, with the first coin on the house · the x402 coin slot on Solana, Base and Algorand mainnet · credit across every cabinet · high-score boards · the touch gamepad · installable on phones                                       |
-| **In the works** | The games running on Ganymede · agents playing through **WebMCP**: Ganymede is gaining an interpreter that turns a game's state and moves into tools an AI agent can use, by the same rules as everyone else |
+| **Live**         | The bazaar and its eleven games in both views · email sign-in, with the first coin on the house · the x402 coin slot on Solana, Base and Algorand mainnet · credit across every cabinet · high-score boards · the touch gamepad · installable on phones · River Raid on Ganymede |
+| **In the works** | The other games on Ganymede · agents playing through **WebMCP**: Ganymede is gaining an interpreter that turns a game's state and moves into tools an AI agent can use, by the same rules as everyone else |
 
 
 ## Credits
