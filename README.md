@@ -73,6 +73,9 @@ landing page shows it live — one run, both views, with a seam you can drag bet
   choose — never their email.
 - **River Raid can be played free.** A free play needs no coin and keeps no leaderboard. Played with credit,
   River Raid counts like any other coin game, with its scores on its own board.
+- **Two players, one account.** River Raid, Seaquest and Chopper Command can be played by two people taking
+  turns on the one signed-in account, each player's craft in its own colour. A two-player game spends two plays
+  and is played for fun: it never goes on the leaderboards.
 
 The coin slot is **x402 v2**, the HTTP-native payment protocol: pressing play on a cabinet with no credit
 opens the slot; the server answers the coin request with **`402 Payment Required`** and the coin's terms (one
@@ -81,6 +84,24 @@ way to pay per chain); the wallet signs; the same request goes again with the si
 transaction. Network fees are paid by the facilitator, so a player only ever spends the coin. On Solana and
 Algorand the payment carries the player's opaque account reference (a Solana memo, an Algorand note) — never
 their email.
+
+### Agents play too — through WebMCP
+
+An AI agent can come to Arcade Bazaar and play straight away, by the same rules as everyone else. Every game
+offers its moves as **WebMCP** tools — the proposed web standard (W3C Web Machine Learning Community Group) for
+a page to offer its actions to an agent — which Ganymede generates for each game from a short profile of it.
+The bazaar has no agent of its own: you bring yours.
+
+- **The tools:** `game.describe`, `game.start({ game, view })`, `game.observe`, `game.act`, `game.events` and
+  `game.stop`, and, to read, `bazaar.games`, `bazaar.agents_board` and `account.credit`. There are no payment
+  tools.
+- **What an agent sees is described, never left to guess:** every field of a game's status says what it
+  describes, and every number in it is worked out by the game's own code.
+- **An agent plays as you, on your account:** it spends one play of credit, as you would, and its scores go on
+  a board of their own under your name with `-agent` added — the leaderboards have a Humans | Agents switch.
+- **You watch it live**, in the view it chose when it started, with **Stop** and **Exit** in your hands. The game
+  runs in real time and waits for no one, and one account plays one game at a time, human or agent.
+- **River Raid** is played by agents only with credit.
 
 ---
 
@@ -110,8 +131,8 @@ their email.
 </table>
 
 Every game has its own loading screen in its own look, and a touch gamepad on phones (one thumb on a floating
-stick, the other on the buttons, either hand); every coin game keeps its high-score board in its own look,
-too. Several gain a **new touch** on purpose — River Raid altitude and bombs, Pitfall a whip, Chopper Command
+stick, the other on the buttons, either hand), and the bazaar installs on a phone's home screen; every coin
+game keeps its high-score board in its own look, too. Several gain a **new touch** on purpose — River Raid altitude and bombs, Pitfall a whip, Chopper Command
 dawn to night, and in the originals, Afterglow's past that becomes the level and Runner Noire's way up.
 
 ### Posters
@@ -138,7 +159,7 @@ dawn to night, and in the originals, Afterglow's past that becomes the level and
 ```mermaid
 flowchart LR
   subgraph AB["arcadebazaar · the platform"]
-    UI["Bazaar UI<br/>landing · coin slot · boards · gamepad · loaders"]
+    UI["Bazaar UI<br/>landing · coin slot · boards (humans, agents) · gamepad · loaders"]
     API["Worker · Hono<br/>accounts · coins · runs · boards"]
     C["the game contract"]
   end
@@ -146,12 +167,15 @@ flowchart LR
     GM["each game: its rules, both views,<br/>its art, sound and story UI"]
   end
   subgraph E["Ganymede · the game engine"]
-    HOST["host: loop, input, phases, views<br/>stage · dom · render2d · render3d · audio"]
+    HOST["host: runGame · loop · input · phases · views<br/>stage · dom · render2d · render3d · audio"]
+    AGENT["agent: WebMCP tools<br/>generated for each game"]
     CORE["core: deterministic rules, steps,<br/>randomness, geometry, pilots"]
   end
+  AI["an AI agent"] -- "WebMCP tools" --> AGENT
   UI -- "reads games/catalogue.json,<br/>loads each game at runtime" --> GM
   GM -- implements --> C
-  GM -- "River Raid and Seaquest run on it" --> HOST
+  GM -- "every game runs on it" --> HOST
+  AGENT --> HOST
   HOST --> CORE
 ```
 
@@ -164,8 +188,8 @@ flowchart LR
 - **The games** ([games](https://github.com/GoPlausible/games)) are eleven folders, each a whole game: its
   rules, its two views, its art, its sound and its story UI. A game fetches its engine, both views, its sound
   and its art behind its own loading screen only when you press play, so the landing page stays light.
-- **Ganymede** ([Ganymede](https://github.com/GoPlausible/Ganymede)) is our game engine, and **River Raid and
-  Seaquest run on it**.
+- **Ganymede** ([Ganymede](https://github.com/GoPlausible/Ganymede)) is our game engine, and **every game runs
+  on it**.
 
 ### One set of rules, two renderers
 
@@ -180,22 +204,18 @@ and the rules are tested headless.
 Ganymede is written **from the games up**: every part is taken from code the games already share, and its
 specs hold it to that code — the same inputs give the same bits.
 
-**River Raid is the first game on it.** Its rules were rebuilt as a Ganymede simulation and checked against
-ten recorded runs of its earlier build, about 72,500 frames: every one replays exactly, frame for frame, so it
-plays as it always did. Its Modern view is unchanged; its Vintage view, cockpit menus, controls and the demo
-pilot that flies its card are Ganymede's pieces put together, and it downloads a third less before it starts.
+**All eleven games run on it**, and each moved without a change in how it plays: its rules were checked against
+the game as it was, step for step — River Raid's against ten recordings of its earlier build, about 72,500
+frames, every one replayed exactly. A game on Ganymede is its rules, its art, its sound and its story;
+**`runGame`** is everything else, in one call — the loop, the controls, the phases and menus, the coin slot,
+the Vintage ⇄ Modern switch, the sound — and **`createPreview`** is its live run on the bazaar's card.
 
-**Seaquest followed, and with it `runGame`:** the shell every game used to write for itself — the loop, the
-phases and menus, the coin slot, the keys, the view switch, the sound — drawn from the two games side by side
-into one call, so each game keeps only what is its own. Seaquest dives exactly as it did: its old rules and its
-new ones, played side by side, stay identical step for step.
-
-Its **core** is built:
+Its **core**:
 
 | Module                                                               | What it does                                                                             | Taken from                                                                |
 | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | `stepper`                                                            | Fixed steps from a variable frame clock, with interpolation between steps                | the games' loops, proven on Enduro's race step for step                   |
-| `rng`                                                                | Seeded generators whose whole state is one number                                        | Afterglow, Runner Noire, River Raid, The Journey                          |
+| `rng`                                                                | Seeded generators whose whole state is one number                                        | every game's rules                                                        |
 | `geom`                                                               | Swept boxes, swept oriented boxes (SAT), swept circles, segments, half ellipses          | Seaquest, Chopper Command, Enduro, Missile Command, Arc Ninja, River Raid |
 | `rules`                                                              | Spring-return throttles, cooldowns, schedules, ramps, scoring, lives with hold and grace | River Raid, Arc Ninja, The Journey, Enduro, Seaquest, Runner Noire        |
 | `stream`                                                             | Worlds built ahead and forgotten behind, in float64 — no rebasing, however far           | The Journey                                                               |
@@ -207,12 +227,14 @@ a Worker. Around it is everything a game runs on in the browser:
 
 | Module     | What it does                                                                                                                                                 |
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `host`     | `runGame`, the one call a game's shell makes: the loop (fixed steps, frames drawn between them), input as actions from keys, gamepads and the bazaar's touch pad, a game's phases and the coin slot's gate, the Vintage ⇄ Modern switch and its transition, storage, full screen, assets; and `createPreview`, the game's live run on its bazaar card |
-| `stage`    | The game's frame, scaled by whole pixels so the Vintage picture stays sharp                                                                                  |
-| `render2d` | Canvas surfaces, and sprite sheets cut, keyed and recoloured once                                                                                            |
-| `render3d` | The WebGL2 check, so a browser without it keeps playing in Vintage                                                                                           |
-| `audio`    | One Web Audio context per game, woken by the player's first press                                                                                           |
-| `dom`      | Menus played from the keyboard (Space for the main action, arrows between buttons) and HUDs that write only what changed                                     |
+| `host`     | `runGame` and `createPreview`; the loop (fixed steps, frames drawn between them), input as actions from keys, gamepads and the bazaar's touch pad, a game's phases and the coin slot's gate, the Vintage ⇄ Modern switch and its transition, assets, storage, full screen |
+| `stage`    | The game's frame and its layers, the Vintage picture scaled by whole pixels so it stays sharp                                                                 |
+| `render2d` | Canvas surfaces, sprite sheets and bitmap fonts, dithering, a 2D camera with its minimap, frame animation by time or by distance, particles                 |
+| `render3d` | WebGL2 through Three.js: the renderer with a lighter tier for phones, post-processing, environments, cameras, instanced cards, glTF models, shared GLSL       |
+| `audio`    | One Web Audio context per game: voices that begin and end at true silence, engine loops, recorded sound sets with synthesized stand-ins, sound placed in space, speech, one sound path at a time |
+| `dom`      | Menus played from the keyboard (Space for the main action, arrows between buttons), HUDs that write only what changed, loading screens, boards                |
+| `agent`    | The WebMCP tools, generated for each game from its profile                                                                                                    |
+| `devtools` | In development only: the rules' real shapes drawn over either view, step and freeze, diagnostics                                                              |
 
 ### Infrastructure
 
@@ -238,15 +260,8 @@ same-origin, so there is no CORS anywhere.
 **TypeScript** throughout · **React** and **Vite** for the platform · the **HTML canvas** for Vintage views ·
 **WebGL2**, **Three.js** and custom **GLSL** shaders for Modern views · **Web Audio** for synthesized and recorded sound · **Cloudflare Workers** with **Hono**,
 **Pages**, **D1**, **KV**, **R2** and **Durable Objects** · **x402** with USDC on **Solana**, **Base** and
-**Algorand** · **Playwright** driving every game in a real browser · **Ganymede**, our own engine.
-
-## Status
-
-|                  |                                                                                                                                                                                                                                                                                               |
-| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Live**         | The bazaar and its eleven games in both views · email sign-in, with the first coin on the house · the x402 coin slot on Solana, Base and Algorand mainnet · credit across every cabinet · high-score boards · the touch gamepad · installable on phones · Agents playing through **WebMCP**: Ganymede is gaining an interpreter that turns a game's state and moves into tools an AI agent can use, by the same rules as everyone else |
-
-
+**Algorand** · **WebMCP** for agents · **Playwright** driving every game in a real browser · **Ganymede**, our
+own engine.
 
 ## Credits
 
