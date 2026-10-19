@@ -5,7 +5,7 @@
 <h1 align="center">Arcade Bazaar · Ganymede</h1>
 
 <p align="center">
-  <b>Colosseum Cryptofair Hackathon submission</b><br>
+  <b>Colosseum Crypto World Fair Hackathon submission</b><br>
   A modern online arcade where every game plays in a <b>Vintage</b> and a <b>Modern</b> view,
   coins are <b>x402</b> payments in USDC, and <b>Ganymede</b> is our own game engine.
 </p>
@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/poster.png" alt="Ganymede game engine · Arcade Bazaar gaming platform — Colosseum Cryptofair hackathon poster" width="560">
+  <img src="assets/poster.png" alt="Ganymede game engine · Arcade Bazaar gaming platform — Colosseum Crypto World Fair Hackathon poster" width="560">
 </p>
 
 ---
@@ -29,7 +29,7 @@
 | **Ganymede** (the game engine)   | https://github.com/GoPlausible/Ganymede     |
 | **Built by**                     | [GoPlausible](https://goplausible.com)      |
 
-## Cryptofair Videos
+## Crypto World Fair Hackathon Videos
 
 <table>
   <tr>
