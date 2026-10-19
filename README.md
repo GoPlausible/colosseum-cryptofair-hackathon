@@ -151,7 +151,7 @@ flowchart LR
   end
   UI -- "reads games/catalogue.json,<br/>loads each game at runtime" --> GM
   GM -- implements --> C
-  GM -- "River Raid runs on it" --> HOST
+  GM -- "River Raid and Seaquest run on it" --> HOST
   HOST --> CORE
 ```
 
@@ -164,8 +164,8 @@ flowchart LR
 - **The games** ([games](https://github.com/GoPlausible/games)) are eleven folders, each a whole game: its
   rules, its two views, its art, its sound and its story UI. A game fetches its engine, both views, its sound
   and its art behind its own loading screen only when you press play, so the landing page stays light.
-- **Ganymede** ([Ganymede](https://github.com/GoPlausible/Ganymede)) is our game engine, and **River Raid runs
-  on it**.
+- **Ganymede** ([Ganymede](https://github.com/GoPlausible/Ganymede)) is our game engine, and **River Raid and
+  Seaquest run on it**.
 
 ### One set of rules, two renderers
 
@@ -185,6 +185,11 @@ ten recorded runs of its earlier build, about 72,500 frames: every one replays e
 plays as it always did. Its Modern view is unchanged; its Vintage view, cockpit menus, controls and the demo
 pilot that flies its card are Ganymede's pieces put together, and it downloads a third less before it starts.
 
+**Seaquest followed, and with it `runGame`:** the shell every game used to write for itself — the loop, the
+phases and menus, the coin slot, the keys, the view switch, the sound — drawn from the two games side by side
+into one call, so each game keeps only what is its own. Seaquest dives exactly as it did: its old rules and its
+new ones, played side by side, stay identical step for step.
+
 Its **core** is built:
 
 | Module                                                               | What it does                                                                             | Taken from                                                                |
@@ -202,7 +207,7 @@ a Worker. Around it is everything a game runs on in the browser:
 
 | Module     | What it does                                                                                                                                                 |
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `host`     | The loop (fixed steps, frames drawn between them), input as actions from keys, gamepads and the bazaar's touch pad, a game's phases and the coin slot's gate, the Vintage ⇄ Modern switch and its transition, storage, full screen, assets |
+| `host`     | `runGame`, the one call a game's shell makes: the loop (fixed steps, frames drawn between them), input as actions from keys, gamepads and the bazaar's touch pad, a game's phases and the coin slot's gate, the Vintage ⇄ Modern switch and its transition, storage, full screen, assets; and `createPreview`, the game's live run on its bazaar card |
 | `stage`    | The game's frame, scaled by whole pixels so the Vintage picture stays sharp                                                                                  |
 | `render2d` | Canvas surfaces, and sprite sheets cut, keyed and recoloured once                                                                                            |
 | `render3d` | The WebGL2 check, so a browser without it keeps playing in Vintage                                                                                           |
@@ -239,7 +244,7 @@ same-origin, so there is no CORS anywhere.
 
 |                  |                                                                                                                                                                                                                                                                                               |
 | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Live**         | The bazaar and its eleven games in both views · email sign-in, with the first coin on the house · the x402 coin slot on Solana, Base and Algorand mainnet · credit across every cabinet · high-score boards · the touch gamepad · installable on phones · River Raid on Ganymede |
+| **Live**         | The bazaar and its eleven games in both views · email sign-in, with the first coin on the house · the x402 coin slot on Solana, Base and Algorand mainnet · credit across every cabinet · high-score boards · the touch gamepad · installable on phones · River Raid and Seaquest on Ganymede |
 | **In the works** | The other games on Ganymede · agents playing through **WebMCP**: Ganymede is gaining an interpreter that turns a game's state and moves into tools an AI agent can use, by the same rules as everyone else |
 
 
