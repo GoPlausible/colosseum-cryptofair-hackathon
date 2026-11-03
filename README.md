@@ -49,7 +49,7 @@
 ## What it is
 
 **Arcade Bazaar** is an arcade for the web, and it works like one: you play with coins. Its floor holds
-thirteen cabinets — six recreations of golden-age classics and seven original games of our own — and every one
+fourteen cabinets — six recreations of golden-age classics and eight original games of our own — and every one
 of them plays in two views at once:
 
 - **Vintage** — the original's screen: its pixel grid, its palette, its pace.
@@ -130,7 +130,7 @@ The bazaar has no agent of its own: you bring yours.
   </tr>
   <tr>
     <td><img src="assets/games/theseus.jpg" alt="Theseus, Modern view"><br><b>Theseus</b> · original<br><sub>Designed by @emg110 · built by GoPlausible</sub><br><i>Follow the thread. Outrun the beast. Reach her before the last grain falls.</i></td>
-    <td></td>
+    <td><img src="assets/games/bike-mania.jpg" alt="Bike Mania, Modern view"><br><b>Bike Mania</b> · original<br><sub>Designed by @emg110 · built by GoPlausible</sub><br><i>Find your line. Fly the jump. There is always another course.</i></td>
     <td></td>
   </tr>
 </table>
@@ -168,7 +168,7 @@ flowchart LR
     API["Worker · Hono<br/>accounts · coins · runs · boards"]
     C["the game contract"]
   end
-  subgraph G["games · thirteen games"]
+  subgraph G["games · fourteen games"]
     GM["each game: its rules, both views,<br/>its art, sound and story UI"]
   end
   subgraph E["Ganymede · the game engine"]
@@ -190,7 +190,7 @@ flowchart LR
   loading screen, its preview, its board, its loader) and what the platform gives it (the coin slot's
   `play()` and `gameOver()`, the view, the gamepad). The Worker reads its list of games from the same
   catalogue, so the floor and the server can never disagree.
-- **The games** ([games](https://github.com/GoPlausible/games)) are thirteen folders, each a whole game: its
+- **The games** ([games](https://github.com/GoPlausible/games)) are fourteen folders, each a whole game: its
   rules, its two views, its art, its sound and its story UI. A game fetches its engine, both views, its sound
   and its art behind its own loading screen only when you press play, so the landing page stays light.
 - **Ganymede** ([Ganymede](https://github.com/GoPlausible/Ganymede)) is our game engine, and **every game runs
@@ -209,7 +209,7 @@ and the rules are tested headless.
 Ganymede is written **from the games up**: every part is taken from code the games already share, and its
 specs hold it to that code — the same inputs give the same bits.
 
-**All thirteen games run on it**, and each moved without a change in how it plays: its rules were checked against
+**All fourteen games run on it**, and each moved without a change in how it plays: its rules were checked against
 the game as it was, step for step — River Raid's against ten recordings of its earlier build, about 72,500
 frames, every one replayed exactly. A game on Ganymede is its rules, its art, its sound and its story;
 **`runGame`** is everything else, in one call — the loop, the controls, the phases and menus, the coin slot,
@@ -273,9 +273,10 @@ own engine.
 The recreations are independent works inspired by classic games; the originals — their titles, characters,
 artwork and trademarks — belong to their owners: Activision (part of Microsoft) for River Raid, Pitfall!,
 Enduro, Seaquest and Chopper Command, and Atari for Missile Command. Arcade Bazaar is not affiliated with or
-endorsed by them. Arc Ninja, Mobius, Afterglow, Runner Noire, The Journey, Nitros and Theseus are original games designed
+endorsed by them. Arc Ninja, Mobius, Afterglow, Runner Noire, The Journey, Nitros, Theseus and Bike Mania are original games designed
 by @emg110 and built by GoPlausible; Theseus's story and characters draw on Greek mythology. Nitros's cars are third-party models used under CC BY 4.0, credited with
-the game; the cars' names and marks belong to their makers, who are not affiliated with it.
+the game; the cars' names and marks belong to their makers, who are not affiliated with it. Bike Mania's ground surfaces
+are Poly Haven photographs by Rob Tuytel, CC0, credited with the game.
 
 ## Licence
 
